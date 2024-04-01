@@ -1,0 +1,55 @@
+import discord
+import os
+import random
+from discord.ext import commands
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'Kita telah masuk sebagai {bot.user}')
+
+item = os.listdir("item")
+
+def images_acak():
+    return random.choice(os.listdir("item"))
+
+@bot.command()
+async def kreasi(ctx):
+    with open(f"item/{images_acak()}", "rb") as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+
+@bot.command()
+async def ide(ctx):
+    await ctx.send("Ya! Baiklah. Beberapa ide yang mungkin menarik:")
+    await ctx.send("1) Recycle, Mendaur ulang plastik")
+    await ctx.send("2) Reduce, Mengurangi plastik")
+    await ctx.send("3) Reuse, Menggunakan ulang plastik")
+
+    with open ("contoh/gambar.jpg", "rb") as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+
+@bot.command()
+async def penjelasan1(ctx):
+    await ctx.send("Memanfaatkan kembali sampah setelah mengalami proses pengolahan. Kamu bisa menggunakan botol plastik bekas untuk membuat patung, pot tanaman, tempat pensil, dan banyak hal lain! Bisa juga dengan kertas bekas dijadikan karya lipat.")
+
+@bot.command()
+async def penjelasan2(ctx):
+    await ctx.send("Penggunaan plastik selama beberapa dekade ini terus meningkat, dan aku yakin kamu pasti tidak mau menjadi salah satu penyumbang sampah plastik itu. Jadi ini lah beberapa cara yang bisa kamu lakukan agar dapat mengurangi penggunaan sampah plastik.")
+    await ctx.send("1) Menggunakan kantong belanja sendiri seperti shopper bag. Kantong plastik memang lebih praktis tapi hal ini lah yang membuat sampah plastik menjadi semakin menumpuk.")
+    await ctx.send("2) Membawa tumbler saat berpergian, selain kamu bisa mengisi ulangnya dengan air, hal ini juga bisa menjadi salah satu kegiatan untuk mengurangi sampah plastik.")
+    await ctx.send("3) Tidak menggunakan sedotan plastik, kamu dapat mengganti sedotan plastik dengan sedotan stainles steel, sedotan bambu, dan sedotan dari kertas untuk sedotan sekali pakai.")
+    await ctx.send("4) Dan hindari membeli makanan dan minuman menggunakan wada berbahan plastik.")
+
+@bot.command()
+async def penjelasan3(ctx):
+    await ctx.send("Penggunaan ulang plastik mengacu pada praktik memanfaatkan kembali produk-produk plastik yang sudah ada, seperti botol atau kantong, untuk tujuan lain setelah mereka diproses. Hal ini membantu mengurangi limbah plastik dan mengurangi tekanan terhadap lingkungan. Beberapa contoh penggunaan ulang plastik:")
+    await ctx.send("A) Menggunakan kembali botol atau kantong plastik untuk menyimpan makanan atau barang-barang kecil di rumah.")
+    await ctx.send("B) Melakukan refill atau isi ulang botol-botol bekas shampoo atau sabun dengan shampoo atau sabun untuk mengurangi sampah botol plastik")
+
+bot.run("token")
